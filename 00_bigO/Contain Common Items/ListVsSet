@@ -1,0 +1,81 @@
+
+
+#### 📌 **Set**
+
+* **Unordered** collection of **unique** elements
+* **No duplicates allowed**
+* Backed by a **hash table**
+* **Fast membership checking**: `O(1)` average time
+* **Not indexable or sliceable**
+* Use when:
+
+  * You need uniqueness
+  * You want fast `in` lookups
+  * You don't care about order
+
+#### 📌 **List**
+
+* **Ordered** collection of elements
+* **Allows duplicates**
+* Backed by a **dynamic array**
+* **Slow membership checking**: `O(n)` time
+* **Supports indexing, slicing, sorting**
+* Use when:
+
+  * You need to preserve order
+  * You need duplicates
+  * You need to access by index or position
+
+
+
+
+### What is hashing?
+
+**Hashing** is a process that takes some input data (like a string, number, or object) and converts it into a fixed-size numerical value called a **hash value** or **hash code**.
+
+* This hash value represents the original data uniquely (ideally).
+* The hash function does this conversion quickly and consistently.
+* Hashing is used to quickly compare, store, or retrieve data.
+
+---
+
+### Why is hashing important in Python sets and dictionaries?
+
+* Python uses hashing internally for sets and dictionaries.
+* Each element or key is hashed to find its "location" in a special structure called a **hash table**.
+* This allows very fast lookups, insertions, and deletions — average O(1) time.
+* Because of hashing, sets and dictionaries are super efficient for membership tests (`x in my_set`).
+
+---
+
+### Important properties of hashing:
+
+1. **Deterministic**: The same input always produces the same hash.
+2. **Fast to compute**.
+3. **Fixed size output**: Regardless of input size, the hash is a fixed-size number.
+4. **Minimizes collisions**: Different inputs ideally produce different hashes, but collisions can happen.
+5. **One-way**: You cannot (practically) reverse the hash to get the original input.
+
+---
+
+### Hashable vs Unhashable:
+
+* An object is **hashable** if it has a hash value that **never changes during its lifetime**.
+* Immutable built-in types like `int`, `float`, `str`, `tuple` (if elements are hashable) are hashable.
+* Mutable types like `list`, `dict`, or `set` are **not hashable** because their content can change, which would mess up the hash consistency.
+
+---
+
+### Quick example:
+
+```python
+print(hash(42))        # e.g. 42
+print(hash("hello"))   # e.g. some integer value
+print(hash((1, 2, 3))) # tuple is hashable if elements are hashable
+
+# But
+# hash([1, 2, 3])    # TypeError: unhashable type: 'list'
+```
+
+---
+
