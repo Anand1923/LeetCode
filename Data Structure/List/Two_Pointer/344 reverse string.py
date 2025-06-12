@@ -1,3 +1,8 @@
+Python 
+s = "hello"
+reversed_s = s[::-1]  # "olleh"
+
+
 def reverse(num):
     i=0
     j=len(num)-1
