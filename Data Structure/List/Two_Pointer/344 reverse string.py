@@ -12,6 +12,13 @@ def reverse(num):
         j-=1
 
 
+def reverse_string(x: str):
+    rev = ''
+    for i in range(len(x) - 1, -1, -1):  #include 0 in loop
+        rev = rev + x[i]
+    return rev
+
+
 
 #Leetcode 344
 def reverse_integer(x: int) -> int:
