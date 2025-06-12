@@ -24,91 +24,101 @@ def reverse_integer(x: int) -> int:
 
     return sign * reversed_num if -2**31 <= reversed_num <= MAX_INT else 0
 
- 
-# 🧠 Step-by-Step Thought Process 
-# 🔍 1. Understand the Problem 
 
-# You're given an integer (positive or negative), and you need to reverse its digits. 
 
-# Examples:  
+## 🧾 **Reverse Integer – Interview Cheat Sheet (Printable Version)**
 
-#     Input: 123 → Output: 321
-#     Input: -123 → Output: -321
-#     Input: 120 → Output: 21
-     
+Use this cheat sheet to **practice** the "Reverse Integer" problem confidently in mock interviews or whiteboarding sessions.
 
-# Also, if the reversed number overflows a 32-bit signed integer , return 0. 
+---
 
-#     32-bit signed int range: from -2³¹ to 2³¹ - 1 , i.e., -2147483648 to 2147483647  
-     
+### 🔍 **Problem Summary**
+- Reverse digits of a **32-bit signed integer**
+- Return `0` if reversed number overflows 32-bit range
 
-# ✨ 2. Think About How You Reverse Digits 
+**Constraints:**
+- Input range: `-2³¹` to `2³¹ - 1`  
+- i.e., from **-2147483648** to **2147483647**
 
-# You can't just flip the number like a string (though that’s a possible solution). But for better efficiency, try doing it digit by digit using math . 
+---
 
-# So, think: 
+### 🧠 **Edge Cases to Consider**
 
-#     "I’ll take one digit at a time from the end of the number..."
-#     "...and build the reversed number step by step."
-     
+| Case              | Example       | Output |
+|-------------------|---------------|--------|
+| Positive number   | `123`         | `321`  |
+| Negative number   | `-123`        | `-321` |
+| Ends with zero    | `120`         | `21`   |
+| Zero              | `0`           | `0`    |
+| Overflow          | `2147483647`  | `0`    |
 
-# This leads to: 
-# python
- 
- 
-# 1
-# 2
-# 3
-# digit = x % 10   # get last digit
-# x = x // 10      # remove last digit
-# reversed_num = reversed_num * 10 + digit
- 
- 
- 
-# 🧮 3. Handle the Sign 
+---
 
-# Before reversing, save the sign so you can apply it back later. 
-# python
- 
- 
-# 1
-# 2
-# sign = -1 if x < 0 else 1
-# x = abs(x)
- 
- 
- 
-# ⚠️ 4. Handle Overflow 
+### 🛠️ **Recommended Approach**
+Use **modulo `%` and division `//`** to extract and build digits.
 
-# Since Python doesn’t restrict integers, you must manually check  whether the reversed number would overflow a 32-bit signed integer before  it happens. 
+#### Why?
+- No string conversion
+- Efficient for large systems
+- Manages overflow manually
 
-# Use this condition before updating reversed_num: 
-# python
- 
- 
-# 1
-# 2
-# ⌄
-# if reversed_num > (MAX_INT - digit) // 10:
-#     return 0
- 
- 
- 
+---
 
-# Where MAX_INT = 2**31 - 1 
-# ✅ 5. Put It All Together 
+### 📋 **Step-by-Step Plan**
 
-# Now combine all steps into a function. 
-# 🧪 Final Simple Thought Flow Summary 
+1. **Save the sign**: `sign = -1 if x < 0 else 1`
+2. **Work with absolute value**: `x = abs(x)`
+3. **Initialize reversed_num**: `reversed_num = 0`
+4. **Loop while x > 0**:
+   - Get last digit → `digit = x % 10`
+   - Remove last digit → `x = x // 10`
+   - **Check for overflow before updating reversed_num**
+   - Update → `reversed_num = reversed_num * 10 + digit`
+5. **Apply sign and return result**: `return sign * reversed_num`
 
-#     Check the sign  → store it.
-#     Work with absolute value  of the number.
-#     Loop through each digit :
-#         Get the last digit (x % 10)
-#         Remove it from the original number (x //= 10)
-#         Build the reversed number (reversed_num = reversed_num * 10 + digit)
-#         Before building , check for overflow 
-         
-#     Apply the sign  at the end.
-#     Return  reversed number or 0 if overflow.
-     
+---
+
+### ⚠️ **Overflow Check (Critical!)**
+
+```python
+MAX_INT = 2**31 - 1  # Max allowed 32-bit signed int
+
+if reversed_num > MAX_INT // 10 or (reversed_num == MAX_INT // 10 and digit > 7):
+    return 0
+```
+
+> This prevents overflow **before it happens**.
+
+---
+
+### ✅ **Final Code Template**
+
+```python
+def reverse_integer(x: int) -> int:
+    sign = -1 if x < 0 else 1
+    x = abs(x)
+    reversed_num = 0
+    MAX_INT = 2**31 - 1
+
+    while x > 0:
+        digit = x % 10
+        x = x // 10
+
+        if reversed_num > MAX_INT // 10 or (reversed_num == MAX_INT // 10 and digit > 7):
+            return 0
+
+        reversed_num = reversed_num * 10 + digit
+
+    return sign * reversed_num
+```
+
+---
+
+### 🧮 **Time & Space Complexity**
+
+| Metric             | Value        | Explanation |
+|--------------------|--------------|-------------|
+| Time Complexity    | `O(log₁₀ n)` | One loop per digit |
+| Space Complexity   | `O(1)`       | Constant space used |
+
+
